@@ -14,7 +14,21 @@ router.post(
         };
 
         const newUsersModel = new UsersModel(formData);
-        newUsersModel.save();
+        newUsersModel.save(
+            (err, dbResult) => {
+
+                // If something goes wrong, send error
+                if(err) {
+                    res.send(err);
+                } 
+                // Otherwise, send success message
+                else {
+                    res.send("User has been saved")
+                }
+            }
+        );
+
+        
     }
 );
 
