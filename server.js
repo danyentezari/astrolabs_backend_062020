@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 // Import routes
 const ProductsRoutes = require('./routes/ProductsRoutes');
 const FeedsRoutes = require('./routes/FeedsRoutes');
+const UsersRoutes = require('./routes/UsersRoutes');
 
 // Create the server object
 const server = express();
@@ -46,6 +47,10 @@ server.use(
     FeedsRoutes
 );
 
+server.use(
+    '/users',
+    UsersRoutes
+);
 
 // Create a route for the landing page
 server.get(
@@ -57,33 +62,6 @@ server.get(
             );
     }
 );
-
-// Create a route for the about page
-server.get(
-    '/about',
-    (req, res) => {
-        res.send(
-            "<h1>About Us</h1>" +
-            "<a href='/'>Home</a>"
-        );
-    }
-);
-
-// Route for Contact
-server.get('/contact', (req, res)=>{
-    res.send('<h1>Contact Us</h1>')
-});
-
-
-// Route for Products
-server.get('/products', (req, res)=>{
-    res.send('<h1>Our Products</h1>')
-});
-
-
-
-
-
 
 // Route for 404
 server.get('*', (req, res)=> {
