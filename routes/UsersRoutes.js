@@ -40,11 +40,11 @@ router.post(
                                 }
                                 // Otherwise, send success message
                                 else {
-                                    res.send("User has been saved")
+                                    res.send("User has been saved");
                                 }
                             }
                         );
-                        
+
                     }
                 )
             }
