@@ -58,6 +58,22 @@ router.post(
     }
 );
 
-
 // /login
+router.post(
+    '/login',
+    (req, res) => {
+
+        // npm packages: passportjs, passportjwt, jsonwebtoken
+
+        // Step 1. Capture formData (email & password)
+        // Step 2a. In database, find account that matches email
+            // Step 2b. If email NOT match, reject the login request
+        // Step 3. If there's matching email, examine the document's password
+        // Step 4. Compare the encrypted password in db with incoming password
+        // Step 5a. If the password matches, generate web token (JWT)
+            // Step 5b. If password NOT match, reject login request
+        // Step 6. Send the JWT to the client
+    }
+)
+
 module.exports = router;

@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 // Import body-parser
 const bodyParser = require('body-parser');
 
-// Import routes
+// Import routes 
 const ProductsRoutes = require('./routes/ProductsRoutes');
 const FeedsRoutes = require('./routes/FeedsRoutes');
 const UsersRoutes = require('./routes/UsersRoutes');
@@ -16,7 +16,6 @@ const server = express();
 // Configure express to use body-parser
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
-
 
 // Enter your database connection URL
 const dbURL = "mongodb+srv://admin01:db12345@cluster0-oikl7.mongodb.net/test_june2020?retryWrites=true&w=majority";
