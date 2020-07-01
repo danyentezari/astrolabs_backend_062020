@@ -4,6 +4,45 @@ const express = require('express');
 const mongoose = require('mongoose');
 // Import body-parser
 const bodyParser = require('body-parser');
+// Import passport
+const passport = require('passport');
+// Import the strategies
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const secret = "s3cr3t100";
+
+const UsersModel = require('./models/UsersModel');
+
+const passportJwtOptions = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: secret
+};
+
+const passportJwt = (passport) => {
+    passport.use(
+        new JwtStrategy(
+            passportJwtOptions, 
+            (jwtPayload, done) => {
+
+                // Extract and find the user by their id (contained jwt)
+                UsersModel.findOne({ _id: jwtPayload.id })
+                .then(
+                    // If the document was found
+                    (document) => {
+                        return done(null, document);
+                    }
+                )
+                .catch(
+                    // If something went wrong with database search
+                    (err) => {
+                        return done(null, null);
+                    }
+                )
+
+            }
+        )
+    )
+};
 
 // Import routes 
 const ProductsRoutes = require('./routes/ProductsRoutes');
@@ -16,6 +55,10 @@ const server = express();
 // Configure express to use body-parser
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
+server.use(passport.initialize());
+
+// Invoke passportJwt and pass the passport package as argument
+passportJwt(passport);
 
 // Enter your database connection URL
 const dbURL = "mongodb+srv://admin01:db12345@cluster0-oikl7.mongodb.net/test_june2020?retryWrites=true&w=majority";
