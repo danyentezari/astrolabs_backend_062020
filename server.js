@@ -6,18 +6,25 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 // Import passport
 const passport = require('passport');
-// Import the strategies
+// Import the strategies & way to extract the jsonwebtoken
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
+
+// The same secret in routes/UsersRoutes will be needed
+// to read the jsonwebtoken
 const secret = "s3cr3t100";
 
+// We need the UsersModel to find the user in the database
 const UsersModel = require('./models/UsersModel');
 
+// Options for passport-jwt
 const passportJwtOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: secret
 };
 
+
+// This function is what will read the contents (payload) of the jsonwebtoken
 const passportJwt = (passport) => {
     passport.use(
         new JwtStrategy(
@@ -38,7 +45,6 @@ const passportJwt = (passport) => {
                         return done(null, null);
                     }
                 )
-
             }
         )
     )
@@ -57,7 +63,7 @@ server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
 server.use(passport.initialize());
 
-// Invoke passportJwt and pass the passport package as argument
+// Invoke passportJwt and pass the passport npm package as argument
 passportJwt(passport);
 
 // Enter your database connection URL
@@ -81,11 +87,13 @@ mongoose.connect(
 
 server.use(
     '/products',
+    passport.authenticate('jwt', {session:false}), // Use passport-jwt to authenticate
     ProductsRoutes
 );
 
 server.use(
     '/feeds',
+    passport.authenticate('jwt', {session:false}), // Use passport-jwt to authenticate
     FeedsRoutes
 );
 
