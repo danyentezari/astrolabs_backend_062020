@@ -9,7 +9,7 @@ const FeedsSchema = new mongoose.Schema(
             required: true
         },
         username: {
-            type: String,
+            type: String, // mongoose.Schema.Types.ObjectId
             required: true
         },
         hashtags: {
