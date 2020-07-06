@@ -10,6 +10,9 @@ const passport = require('passport');
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 
+// Import cors
+const cors = require('cors');
+
 // The same secret in routes/UsersRoutes will be needed
 // to read the jsonwebtoken
 const secret = "s3cr3t100";
@@ -63,6 +66,7 @@ const server = express();
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
 server.use(passport.initialize());
+server.use(cors());
 
 // Invoke passportJwt and pass the passport npm package as argument
 passportJwt(passport);
