@@ -26,7 +26,6 @@ const passportJwtOptions = {
     secretOrKey: secret
 };
 
-
 // This function is what will read the contents (payload) of the jsonwebtoken
 const passportJwt = (passport) => {
     passport.use(
