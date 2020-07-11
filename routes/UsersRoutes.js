@@ -38,11 +38,11 @@ router.post(
 
                                 // If something goes wrong, send error
                                 if(err) {
-                                    res.send(err);
+                                    res.json({message: err});
                                 }
                                 // Otherwise, send success message
                                 else {
-                                    res.send("User has been saved");
+                                    res.json({message: "User has been saved"});
                                 }
                             }
                         );
@@ -75,7 +75,7 @@ router.post(
 
                 // Step 2b. If email NOT match, reject the login request
                 if(!document) {
-                    res.send("Please check email or password");
+                    res.json({message: "Please check email or password"});
                 }
 
                 // Step 3. If there's matching email, examine the document's password
@@ -98,9 +98,9 @@ router.post(
                                     payload,
                                     secret,
                                     (err, jsonwebtoken) => {
-                                        res.send(
+                                        res.json(
                                             {
-                                                msg: 'Login successful',
+                                                message: 'Login successful',
                                                 jsonwebtoken: jsonwebtoken
                                             }
                                         )
