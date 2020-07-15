@@ -14,6 +14,8 @@ router.post(
             model: req.body.model,
             price: req.body.price,
             qty: req.body.qty,
+            image: req.body.image,
+            description: req.body.description
         }
 
         // Instantiate the ProductsModel
@@ -54,7 +56,31 @@ router.post(
             }
         )
     }
-)
+);
+
+// A GET route for fetching data from the 'feeds' collection
+router.get(
+    '/',
+    (req, res)=>{
+
+        // (1) Fetch all the documents using .find()
+        ProductsModel.find()
+
+        // (2) Once the results are ready, use .json() to send the results
+        .then(
+            (results) => {
+                // res.json = res.send() + converts to JSON
+                res.json({products: results})
+            }
+        )
+        .catch( 
+            (e)=> {
+                console.log('error occured', e)
+            }
+        );
+
+    }
+);
 
 // Export the router
 module.exports = router;
